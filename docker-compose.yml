@@ -1,0 +1,65 @@
+version: '3'
+services:
+
+  #PHP Service
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - app_users_data:/var/www/storage/app/users
+      - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
+
+  #Nginx Service
+  webserver:
+    image: nginx:alpine
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ./:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    ports:
+      - "88:80"
+    networks:
+      - app-network
+
+  #MongoDB Service
+  mongodb:
+    image: mongo:4.2-bionic
+    container_name: mongodb
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "27077:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: simulair
+      MONGODB_DATA_DIR: /data/db
+      SERVICE_NAME: mongodb
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+
+#Docker Volumes
+volumes:
+  mongodb_data:
+    driver: local
+  app_users_data:
+    driver: local

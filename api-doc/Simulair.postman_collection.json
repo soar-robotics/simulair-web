@@ -1,0 +1,872 @@
+{
+	"info": {
+		"_postman_id": "4f5e495e-b000-4d69-880a-214e2c86ef88",
+		"name": "Simulair",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "first_name",
+							"value": "Lorem",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "Ipsum",
+							"type": "text"
+						},
+						{
+							"key": "company",
+							"value": "CompanyName",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "email@lubarto.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "confirm_password",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api_root}}/auth/register",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Resend Email Verification",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTU5ODI3NzAzNywiZXhwIjoxNTk4MjgwNjM3LCJuYmYiOjE1OTgyNzcwMzcsImp0aSI6IkdSZUVEZFFkaXRXcFFZYVYiLCJzdWIiOiI1ZjQyOWRlYjMxMDE3MzM2YjczOGI2NGUiLCJwcnYiOiI5NDdkMDE2OGI5NDIzM2YzNjE3NDNhMTQ4OWRiNzM0MGQxNGFkYjYyIn0.kqiNC95dxkXl03eaqnW455tZtB_DBhtLWWXEBzUailI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{api_root}}/auth/verification/email/resend",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"auth",
+						"verification",
+						"email",
+						"resend"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authenticate (Login/JWT)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "test@lubarto.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						},
+						{
+							"key": "platform",
+							"value": "web",
+							"description": "Optional: if set, the web service will attempt to set a HttpOnly Cookie containing the RefreshToken for a client.",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api_root}}/auth/token",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"auth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Token (JWT) Refresh",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "refresh_token",
+							"value": "e80aff4ed38ded0debe434458807714a8e55996a8ea0df8ee5a3856849fa98fa5dcb55174b9dbe7f681381f7729de3a977982937bb19647367e43a5f95f13db6",
+							"description": "Optional: required in case the RefreshToken was not stored in a HttpOnly Cookie during authentication.",
+							"type": "text"
+						},
+						{
+							"key": "platform",
+							"value": "web",
+							"description": "Optional: required in case RefreshToken is read from the HttpOnly Cookie and needs to be rewritten by the new one.",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api_root}}/auth/token/refresh",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"auth",
+						"token",
+						"refresh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Token (JWT) Invalidate",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTU5ODI3Nzc1OSwiZXhwIjoxNTk4MjgxMzU5LCJuYmYiOjE1OTgyNzc3NTksImp0aSI6Im43cFplUmNrQ1dVaTlhN28iLCJzdWIiOiI1ZjQyOWRlYjMxMDE3MzM2YjczOGI2NGUiLCJwcnYiOiI5NDdkMDE2OGI5NDIzM2YzNjE3NDNhMTQ4OWRiNzM0MGQxNGFkYjYyIn0.hOlv1OMh_49wkkF4SaPndHXv0VldOdSxIcuxoKL678w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "refresh_token",
+							"value": "e80aff4ed38ded0debe434458807714a8e55996a8ea0df8ee5a3856849fa98fa5dcb55174b9dbe7f681381f7729de3a977982937bb19647367e43a5f95f13db6",
+							"description": "Optional: required in case the RefreshToken was not stored in a HttpOnly Cookie during authentication.",
+							"type": "text"
+						},
+						{
+							"key": "platform",
+							"value": "web",
+							"description": "Optional: required in case RefreshToken is read from the HttpOnly Cookie and needs to be rewritten by the new one.",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api_root}}/auth/token/invalidate",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"auth",
+						"token",
+						"invalidate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth User - Me",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODhcL2FwaVwvYXV0aFwvdG9rZW4iLCJpYXQiOjE1OTg0NzEwMDQsImV4cCI6MTU5ODQ3NDYwNCwibmJmIjoxNTk4NDcxMDA0LCJqdGkiOiJncW9ZaW54VWphcG9pMlRJIiwic3ViIjoiNWY0NmI4M2ZiMGI0ZjA0NTk0MjI3NDYyIiwicHJ2IjoiOTQ3ZDAxNjhiOTQyMzNmMzYxNzQzYTE0ODlkYjczNDBkMTRhZGI2MiJ9._z_bjGdzp4QmuvK17QNIJW1HzuCITA2ITFouISwO_88",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{api_root}}/me",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth User - Image",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTU5ODI3ODU1MSwiZXhwIjoxNTk4MjgyMTUxLCJuYmYiOjE1OTgyNzg1NTEsImp0aSI6IldkaU1NOVk2OU9qRUs5T3UiLCJzdWIiOiI1ZjQyOWRlYjMxMDE3MzM2YjczOGI2NGUiLCJwcnYiOiI5NDdkMDE2OGI5NDIzM2YzNjE3NDNhMTQ4OWRiNzM0MGQxNGFkYjYyIn0.urVMR-ZkONxKDUI9SrHCuUnpWs01sx3mv3MDG16ghh4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{api_root}}/me/image",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"me",
+						"image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth User - Update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTU5ODI3ODU1MSwiZXhwIjoxNTk4MjgyMTUxLCJuYmYiOjE1OTgyNzg1NTEsImp0aSI6IldkaU1NOVk2OU9qRUs5T3UiLCJzdWIiOiI1ZjQyOWRlYjMxMDE3MzM2YjczOGI2NGUiLCJwcnYiOiI5NDdkMDE2OGI5NDIzM2YzNjE3NDNhMTQ4OWRiNzM0MGQxNGFkYjYyIn0.urVMR-ZkONxKDUI9SrHCuUnpWs01sx3mv3MDG16ghh4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "first_name",
+							"value": "luka",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "last",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "luka2322",
+							"type": "text"
+						},
+						{
+							"key": "company",
+							"value": "test company",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api_root}}/me",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth User - Profile Image Update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTU5ODI3ODU1MSwiZXhwIjoxNTk4MjgyMTUxLCJuYmYiOjE1OTgyNzg1NTEsImp0aSI6IldkaU1NOVk2OU9qRUs5T3UiLCJzdWIiOiI1ZjQyOWRlYjMxMDE3MzM2YjczOGI2NGUiLCJwcnYiOiI5NDdkMDE2OGI5NDIzM2YzNjE3NDNhMTQ4OWRiNzM0MGQxNGFkYjYyIn0.urVMR-ZkONxKDUI9SrHCuUnpWs01sx3mv3MDG16ghh4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "profile_image",
+							"type": "file",
+							"src": "/Users/lukabartolic/Downloads/IMG_5650.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api_root}}/me/image",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"me",
+						"image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Environments - Listing",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTU5ODI3OTc2MSwiZXhwIjoxNTk4MjgzMzYxLCJuYmYiOjE1OTgyNzk3NjEsImp0aSI6InNaNUdnU3c0TFRWOGFWSHMiLCJzdWIiOiI1ZjNlYWI1ODE5MTdkOTcxNmY0YTY0NjIiLCJwcnYiOiI5NDdkMDE2OGI5NDIzM2YzNjE3NDNhMTQ4OWRiNzM0MGQxNGFkYjYyIn0.IM7MxHybONX5pXqo1YXK6fe9PtBco8ihRqwdssgpGUo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{api_root}}/environments",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"environments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Environments - Listing (search)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTU5ODI3OTc2MSwiZXhwIjoxNTk4MjgzMzYxLCJuYmYiOjE1OTgyNzk3NjEsImp0aSI6InNaNUdnU3c0TFRWOGFWSHMiLCJzdWIiOiI1ZjNlYWI1ODE5MTdkOTcxNmY0YTY0NjIiLCJwcnYiOiI5NDdkMDE2OGI5NDIzM2YzNjE3NDNhMTQ4OWRiNzM0MGQxNGFkYjYyIn0.IM7MxHybONX5pXqo1YXK6fe9PtBco8ihRqwdssgpGUo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{api_root}}/environments?query=Marcelina",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"environments"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "Marcelina"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Robots - Listing",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTU5ODI3OTc2MSwiZXhwIjoxNTk4MjgzMzYxLCJuYmYiOjE1OTgyNzk3NjEsImp0aSI6InNaNUdnU3c0TFRWOGFWSHMiLCJzdWIiOiI1ZjNlYWI1ODE5MTdkOTcxNmY0YTY0NjIiLCJwcnYiOiI5NDdkMDE2OGI5NDIzM2YzNjE3NDNhMTQ4OWRiNzM0MGQxNGFkYjYyIn0.IM7MxHybONX5pXqo1YXK6fe9PtBco8ihRqwdssgpGUo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{api_root}}/robots",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"robots"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Robots - Listing (search)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTU5ODI3OTc2MSwiZXhwIjoxNTk4MjgzMzYxLCJuYmYiOjE1OTgyNzk3NjEsImp0aSI6InNaNUdnU3c0TFRWOGFWSHMiLCJzdWIiOiI1ZjNlYWI1ODE5MTdkOTcxNmY0YTY0NjIiLCJwcnYiOiI5NDdkMDE2OGI5NDIzM2YzNjE3NDNhMTQ4OWRiNzM0MGQxNGFkYjYyIn0.IM7MxHybONX5pXqo1YXK6fe9PtBco8ihRqwdssgpGUo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{api_root}}/robots?query=Randal",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"robots"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "Randal"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Simulations - Listing",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTU5ODI3OTc2MSwiZXhwIjoxNTk4MjgzMzYxLCJuYmYiOjE1OTgyNzk3NjEsImp0aSI6InNaNUdnU3c0TFRWOGFWSHMiLCJzdWIiOiI1ZjNlYWI1ODE5MTdkOTcxNmY0YTY0NjIiLCJwcnYiOiI5NDdkMDE2OGI5NDIzM2YzNjE3NDNhMTQ4OWRiNzM0MGQxNGFkYjYyIn0.IM7MxHybONX5pXqo1YXK6fe9PtBco8ihRqwdssgpGUo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{api_root}}/simulations",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"simulations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Simulations - Listing (search)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTU5ODI3OTc2MSwiZXhwIjoxNTk4MjgzMzYxLCJuYmYiOjE1OTgyNzk3NjEsImp0aSI6InNaNUdnU3c0TFRWOGFWSHMiLCJzdWIiOiI1ZjNlYWI1ODE5MTdkOTcxNmY0YTY0NjIiLCJwcnYiOiI5NDdkMDE2OGI5NDIzM2YzNjE3NDNhMTQ4OWRiNzM0MGQxNGFkYjYyIn0.IM7MxHybONX5pXqo1YXK6fe9PtBco8ihRqwdssgpGUo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{api_root}}/simulations?query=Brendan",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"simulations"
+					],
+					"query": [
+						{
+							"key": "query",
+							"value": "Brendan"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Simulations - Listing (filter: status)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTU5ODI3OTc2MSwiZXhwIjoxNTk4MjgzMzYxLCJuYmYiOjE1OTgyNzk3NjEsImp0aSI6InNaNUdnU3c0TFRWOGFWSHMiLCJzdWIiOiI1ZjNlYWI1ODE5MTdkOTcxNmY0YTY0NjIiLCJwcnYiOiI5NDdkMDE2OGI5NDIzM2YzNjE3NDNhMTQ4OWRiNzM0MGQxNGFkYjYyIn0.IM7MxHybONX5pXqo1YXK6fe9PtBco8ihRqwdssgpGUo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{api_root}}/simulations?status=running",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"simulations"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "running"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Simulation - Store",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9zaW11bGFpci5wcm9qZWN0cy5sdWJhcnRvLmNvbVwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTU5ODQ2MDc2MSwiZXhwIjoxNTk4NDY0MzYxLCJuYmYiOjE1OTg0NjA3NjEsImp0aSI6IkFQQmYzNUcyQVNQaXN5bUIiLCJzdWIiOiI1ZjQ1OWRmNTQzNjg2MDAwNzU2MDg2MDIiLCJwcnYiOiI5NDdkMDE2OGI5NDIzM2YzNjE3NDNhMTQ4OWRiNzM0MGQxNGFkYjYyIn0.DLWK13nUesl5jbCNOffatz7WHFJrxEgvq6davfWHk8M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "robot_id",
+							"value": "5f459df5436860007560860c",
+							"type": "text"
+						},
+						{
+							"key": "environment_id",
+							"value": "5f459df54368600075608616",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "test",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "test_desc",
+							"type": "text"
+						},
+						{
+							"key": "status",
+							"value": "running",
+							"type": "text"
+						},
+						{
+							"key": "thumbnail",
+							"value": "https://lorempixel.com/100/100/?53501",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api_root}}/simulations",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"simulations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Simulation - Set Stopped (status)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTU5ODI3OTc2MSwiZXhwIjoxNTk4MjgzMzYxLCJuYmYiOjE1OTgyNzk3NjEsImp0aSI6InNaNUdnU3c0TFRWOGFWSHMiLCJzdWIiOiI1ZjNlYWI1ODE5MTdkOTcxNmY0YTY0NjIiLCJwcnYiOiI5NDdkMDE2OGI5NDIzM2YzNjE3NDNhMTQ4OWRiNzM0MGQxNGFkYjYyIn0.IM7MxHybONX5pXqo1YXK6fe9PtBco8ihRqwdssgpGUo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{api_root}}/simulations/5f43d13731017336b738b65b/stopped",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"simulations",
+						"5f43d13731017336b738b65b",
+						"stopped"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Simulation - Set Running (status)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTU5ODI3OTc2MSwiZXhwIjoxNTk4MjgzMzYxLCJuYmYiOjE1OTgyNzk3NjEsImp0aSI6InNaNUdnU3c0TFRWOGFWSHMiLCJzdWIiOiI1ZjNlYWI1ODE5MTdkOTcxNmY0YTY0NjIiLCJwcnYiOiI5NDdkMDE2OGI5NDIzM2YzNjE3NDNhMTQ4OWRiNzM0MGQxNGFkYjYyIn0.IM7MxHybONX5pXqo1YXK6fe9PtBco8ihRqwdssgpGUo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{api_root}}/simulations/5f43d13731017336b738b65b/running",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"simulations",
+						"5f43d13731017336b738b65b",
+						"running"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Simulation - Set Paused (status)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTU5ODI3OTc2MSwiZXhwIjoxNTk4MjgzMzYxLCJuYmYiOjE1OTgyNzk3NjEsImp0aSI6InNaNUdnU3c0TFRWOGFWSHMiLCJzdWIiOiI1ZjNlYWI1ODE5MTdkOTcxNmY0YTY0NjIiLCJwcnYiOiI5NDdkMDE2OGI5NDIzM2YzNjE3NDNhMTQ4OWRiNzM0MGQxNGFkYjYyIn0.IM7MxHybONX5pXqo1YXK6fe9PtBco8ihRqwdssgpGUo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "{{api_root}}/simulations/5f43d13731017336b738b65b/paused",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"simulations",
+						"5f43d13731017336b738b65b",
+						"paused"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "d6202135-ff5d-4afd-a62c-0a626b61c02f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "8e59d8e5-89c8-4ea7-bb36-15b8e7d3c247",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "8c7bd65c-176f-4621-b048-6ff0f88c85df",
+			"key": "api_root",
+			"value": "http://simulair.projects.lubarto.com/api"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
