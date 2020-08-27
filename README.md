@@ -27,12 +27,12 @@ Backend solution for Simulair-web project.
        docker-compose up -d
 4. Once built and ran, execute following commands to configure the application
 
-       composer install
-       php artisan key:generate
-       php artisan jwt:secret
-       php artisan config:cache
-       php artisan migrate --path=database/migrations/mongodb
-       php artisan db:seed
+       docker exec app composer install
+       docker exec app php artisan key:generate
+       docker exec -it app php artisan jwt:secret
+       docker exec app php artisan config:cache
+       docker exec app php artisan migrate --path=database/migrations/mongodb
+       docker exec app php artisan db:seed
 
 ## Usage
 
