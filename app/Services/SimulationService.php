@@ -29,7 +29,7 @@ class SimulationService
             $simulations = $simulations->where('status', $statusFilter);
         }
 
-        $simulations = $simulations->with('user')->get();
+        $simulations = $simulations->orderBy('updated_at', 'desc')->with('user')->get();
 
         return $simulations;
     }

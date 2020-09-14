@@ -35,6 +35,10 @@ Route::group(['namespace' => 'Api', 'middleware' => ['api']], function () {
         });
     });
 
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('/{id}/image', 'UserController@getProfileImage')->name('users.user.image');
+    });
+
     Route::group(['prefix' => 'auth'], function () {
         Route::post('token', 'AuthController@login');
         Route::post('token/invalidate', 'AuthController@invalidate');

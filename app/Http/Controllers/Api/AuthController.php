@@ -141,10 +141,13 @@ class AuthController extends Controller
      */
     protected function respondWithTokens(string $token, RefreshToken $refreshToken, ?string $platform)
     {
+	$expiresIn = auth()->factory()->getTTL();
+
         $data = [
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60, // seconds
+            'expires_in' => $expiresIn * 60, // seconds
+	        'expires_at' => Carbon::now()->addMinutes($expiresIn),
             'refresh_token' => $refreshToken->value,
             'refresh_token_exp' => $refreshToken->expiration
         ];
