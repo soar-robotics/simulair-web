@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -29,7 +30,9 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'refresh', 'register', 'verify']]);
+        $this->middleware('auth:api', ['except' => [
+            'login', 'refresh', 'register', 'verify', 'redirectToProvider', 'handleProviderCallback'
+        ]]);
     }
 
     /**
@@ -48,7 +51,7 @@ class AuthController extends Controller
 
         $platform = $request->input('platform');
 
-        $refreshToken = $this->createRefreshToken($platform);
+        $refreshToken = $this->createRefreshToken($platform, auth()->user());
 
         // pass refresh token to response with other data
         return $this->respondWithTokens($token, $refreshToken, $platform);
@@ -58,11 +61,10 @@ class AuthController extends Controller
      * Create refresh token for the user.
      *
      * @param string|null $platform
+     * @param $user
      * @return RefreshToken
      */
-    private function createRefreshToken(?string $platform) {
-        $user = auth()->user();
-
+    private function createRefreshToken(?string $platform, $user) {
         // create refresh token values
         $value = hash('sha512', microtime() . $user->email);
         $expiresIn = 24*60*30; // in minutes, 30 days
@@ -122,7 +124,7 @@ class AuthController extends Controller
 
         // set new tokens for the user and store refresh token in the database
         $token = auth()->login($user);
-        $newRefreshToken = $this->createRefreshToken($platform);
+        $newRefreshToken = $this->createRefreshToken($platform, $user);
 
         // invalidate refresh token that was used to generate new tokens
         $refreshToken->used_at = Carbon::now();
@@ -141,7 +143,7 @@ class AuthController extends Controller
      */
     protected function respondWithTokens(string $token, RefreshToken $refreshToken, ?string $platform)
     {
-	$expiresIn = auth()->factory()->getTTL();
+	    $expiresIn = auth()->factory()->getTTL();
 
         $data = [
             'access_token' => $token,
@@ -230,5 +232,56 @@ class AuthController extends Controller
         return response()->json([
             "message" => "Email verification link sent."
         ]);
+    }
+
+
+    public function redirectToProvider()
+    {
+        return Socialite::driver('google')->stateless()->redirect();
+    }
+
+    public function handleProviderCallback()
+    {
+        $providerUser = Socialite::driver('google')->stateless()->user();
+
+        $user = User::where('email', $providerUser->email)->first();
+
+        if ($user) {
+            $user->google_id = $providerUser->id;
+            $user->google_avatar = $providerUser->avatar;
+            $user->google_token = $providerUser->token;
+            $user->google_auth_at = Carbon::now();
+
+            if (!$user->email_verified_at) $user->email_verified_at = Carbon::now();
+
+            $user->timestamps = false;
+            $user->save();
+        }
+        else {
+            $user = new User();
+            $user->first_name = $providerUser->user['given_name'];
+            $user->last_name = $providerUser->user['family_name'];
+            $user->company = null;
+            $user->email = $providerUser->email;
+            $user->username = Str::uuid()->toString();
+            $user->password = Hash::make(Str::random(40));
+            $user->profile_image = null;
+            $user->email_verified_at = Carbon::now();
+            $user->google_id = $providerUser->id;
+            $user->google_avatar = $providerUser->avatar;
+            $user->google_token = $providerUser->token;
+            $user->google_auth_at = Carbon::now();
+
+            $user->timestamps = false;
+            $user->save();
+        }
+
+        $token = auth()->login($user);
+        //$platform = $request->input('platform');
+        $platform = self::PLATFORM_WEB;
+
+        $refreshToken = $this->createRefreshToken($platform, $user);
+
+        return $this->respondWithTokens($token, $refreshToken, $platform);
     }
 }
