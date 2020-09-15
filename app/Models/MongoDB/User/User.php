@@ -27,7 +27,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     const UPDATED_AT = 'updated_at';
 
     protected $dates = [
-        'email_verified_at'
+        'email_verified_at', 'google_auth_at'
     ];
     protected $fillable = [
         'first_name', 'last_name', 'username', 'company', 'email'
@@ -67,6 +67,10 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
 
     public function getImageUrlAttribute()
     {
+        if (!$this->profile_image) {
+            return null;
+        }
+
         return URL::signedRoute('users.user.image', ['id' => $this->id, 'path' => $this->profile_image]);
     }
 

@@ -16,6 +16,6 @@ class CreateRefreshTokensCollection extends \Database\Migrations\MongoDB\Base\Ba
 
     public function dbDown()
     {
-        // TODO: Implement dbDown() method.
+        $this->schema->dropIfExists('refresh_tokens');
     }
 }

@@ -51,5 +51,8 @@ Route::group(['namespace' => 'Api', 'middleware' => ['api']], function () {
            Route::get('email/verify/{id}', 'AuthController@verify')->name('verification.verify');
            Route::post('email/resend', 'AuthController@resend');
         });
+
+        Route::get('oauth/google', 'AuthController@redirectToProvider');
+        Route::post('oauth/google/callback', 'AuthController@handleProviderCallback');
     });
 });
