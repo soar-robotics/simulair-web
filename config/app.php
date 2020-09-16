@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'sandbox' => env('SANDBOX_MODE', false),
 
     'web_client' => [
         'url' => env('WEB_CLIENT_URL', 'http://localhost:3000'),

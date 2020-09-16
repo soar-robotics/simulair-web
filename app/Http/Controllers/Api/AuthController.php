@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\UserCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\RegisterUserRequest;
 use App\Http\Resources\User\UserResource;
@@ -182,6 +183,7 @@ class AuthController extends Controller
         if (!$user->username) $user->username = Str::uuid()->toString();
         $user->password = Hash::make($request->password);
         $user->save();
+        event(new UserCreated($user));
 
         $user->sendEmailVerificationNotification();
 
@@ -287,6 +289,7 @@ class AuthController extends Controller
 
             $user->timestamps = false;
             $user->save();
+            event(new UserCreated($user));
         }
 
         $token = auth()->login($user);

@@ -32,7 +32,7 @@ $factory->define(Simulation::class, function (Faker $faker) {
         'thumbnail' => Arr::random($tempImages),
         'name' => 'Simulation ' . $faker->firstName,
         'status' => Arr::random([
-            Simulation::STATUS_PAUSED, Simulation::STATUS_RUNNING, Simulation::STATUS_STOPPED
+            Simulation::STATUS_RUNNING, Simulation::STATUS_STOPPED
         ]),
         'description' => $faker->text(150),
         'access_level' => Simulation::ACCESS_LEVEL_PRIVATE,
