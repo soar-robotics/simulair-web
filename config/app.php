@@ -2,6 +2,11 @@
 
 return [
 
+    'web_client' => [
+        'url' => env('WEB_CLIENT_URL', 'http://localhost:3000'),
+        'email_verification_url' => env('WEB_CLIENT_EMAIL_VERIF_URL', 'http://localhost:3000/login'),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

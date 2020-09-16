@@ -48,6 +48,9 @@ class AuthController extends Controller
         if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+        if (!auth()->user()->email_verified_at) {
+            return response()->json(['error' => 'Email address is not verified.'], 403);
+        }
 
         $platform = $request->input('platform');
 
@@ -194,7 +197,7 @@ class AuthController extends Controller
      *
      * @param Request $request
      * @param $userId
-     * @return JsonResponse
+     * @return mixed
      */
     public function verify(Request $request, $userId) {
         if (!$request->hasValidSignature()) {
@@ -209,9 +212,19 @@ class AuthController extends Controller
             $user->markEmailAsVerified();
         }
 
+        /*
         return response()->json([
             "message" => "Successfully verified email address."
         ]);
+        */
+
+        /*
+         * Temporary, for long-term better to send verification URL pointing to
+         * client-side app in email with params, which would invoke
+         * this API endpoint instead of doing redirect
+         */
+        $queryString = "?verify=1&email={$user->email}";
+        return redirect(config('app.web_client.email_verification_url') . $queryString);
     }
 
     /**
