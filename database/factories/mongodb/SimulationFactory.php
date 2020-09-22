@@ -21,11 +21,18 @@ use Illuminate\Support\Arr;
 */
 
 $factory->define(Simulation::class, function (Faker $faker) {
+    $tempImages = [
+        'https://i.imgur.com/q4mv4QN.png',
+        'https://i.imgur.com/cUNy0pr.png',
+        'https://i.imgur.com/EJth8eS.png',
+        'https://i.imgur.com/52gDaGU.png'
+    ];
+
     return [
-        'thumbnail' => $faker->imageUrl(100, 100),
+        'thumbnail' => Arr::random($tempImages),
         'name' => 'Simulation ' . $faker->firstName,
         'status' => Arr::random([
-            Simulation::STATUS_PAUSED, Simulation::STATUS_RUNNING, Simulation::STATUS_STOPPED
+            Simulation::STATUS_RUNNING, Simulation::STATUS_STOPPED
         ]),
         'description' => $faker->text(150),
         'access_level' => Simulation::ACCESS_LEVEL_PRIVATE,

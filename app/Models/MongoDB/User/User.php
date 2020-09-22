@@ -3,6 +3,7 @@
 namespace App\Models\MongoDB\User;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Facades\URL;
 use Jenssegers\Mongodb\Eloquent\Model;
 use Jenssegers\Mongodb\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -26,7 +27,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     const UPDATED_AT = 'updated_at';
 
     protected $dates = [
-        'email_verified_at'
+        'email_verified_at', 'google_auth_at'
     ];
     protected $fillable = [
         'first_name', 'last_name', 'username', 'company', 'email'
@@ -62,6 +63,15 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function getIsVerifiedAttribute()
     {
         return ($this->email_verified_at) ? 1 : 0;
+    }
+
+    public function getImageUrlAttribute()
+    {
+        if (!$this->profile_image) {
+            return null;
+        }
+
+        return URL::signedRoute('users.user.image', ['id' => $this->id, 'path' => $this->profile_image]);
     }
 
     public function refreshTokens() {

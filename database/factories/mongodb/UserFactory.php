@@ -33,6 +33,10 @@ $factory->define(User::class, function (Faker $faker) {
         //'profile_image' => $faker->imageUrl(320, 240),
         'profile_image' => null,
         'company' => $faker->company,
+        'google_id' => null,
+        'google_avatar' => null,
+        'google_token' => null,
+        'google_auth_at' => null,
         'created_at' => Carbon::now(),
         'updated_at' => Carbon::now(),
     ];

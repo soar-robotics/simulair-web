@@ -18,7 +18,7 @@ class UserController extends Controller
 
     public function __construct(UserService $userService)
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api')->except(['getProfileImage']);
 
         $this->userService = $userService;
     }
@@ -65,6 +65,20 @@ class UserController extends Controller
         $user = auth()->user();
 
         $path = $this->userService->getProfileImagePath($user->id);
+
+        if ($path) {
+            return response()->file($path);
+        }
+
+        return response()->json(["message" => "File not found."], 404);
+    }
+
+    public function getProfileImage(Request $request, string $id) {
+        if (! $request->hasValidSignature()) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $path = $this->userService->getProfileImagePath($id);
 
         if ($path) {
             return response()->file($path);

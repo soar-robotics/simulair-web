@@ -21,8 +21,15 @@ use Illuminate\Support\Arr;
 */
 
 $factory->define(Environment::class, function (Faker $faker) {
+    $tempImages = [
+        'https://i.imgur.com/q4mv4QN.png',
+        'https://i.imgur.com/cUNy0pr.png',
+        'https://i.imgur.com/EJth8eS.png',
+        'https://i.imgur.com/52gDaGU.png'
+    ];
+
     return [
-        'thumbnail' => $faker->imageUrl(100, 100),
+        'thumbnail' => Arr::random($tempImages),
         'name' => 'Environment ' . $faker->firstName,
         'description' => $faker->text(150),
         'access_level' => Environment::ACCESS_LEVEL_PRIVATE,

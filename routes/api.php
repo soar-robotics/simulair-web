@@ -35,6 +35,10 @@ Route::group(['namespace' => 'Api', 'middleware' => ['api']], function () {
         });
     });
 
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('/{id}/image', 'UserController@getProfileImage')->name('users.user.image');
+    });
+
     Route::group(['prefix' => 'auth'], function () {
         Route::post('token', 'AuthController@login');
         Route::post('token/invalidate', 'AuthController@invalidate');
@@ -47,5 +51,8 @@ Route::group(['namespace' => 'Api', 'middleware' => ['api']], function () {
            Route::get('email/verify/{id}', 'AuthController@verify')->name('verification.verify');
            Route::post('email/resend', 'AuthController@resend');
         });
+
+        Route::get('oauth/google', 'AuthController@redirectToProvider');
+        Route::post('oauth/google/callback', 'AuthController@handleProviderCallback');
     });
 });
