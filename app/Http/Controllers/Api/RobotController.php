@@ -9,6 +9,7 @@ use App\Http\Resources\Robot\RobotResource;
 use App\Http\Resources\Robot\RobotCollection;
 use App\Services\RobotService;
 use Illuminate\Support\Arr;
+use App\Http\Requests\Robot\StoreRobotRequest;
 
 class RobotController extends Controller
 {
@@ -39,5 +40,29 @@ class RobotController extends Controller
 
         //return new RobotCollection($robots->paginate(2)->appends(["sort" => "test"]));
         return new RobotCollection($robots);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param StoreSimulationRequest $request
+     * @return SimulationResource
+     */
+    public function store(StoreRobotRequest $request)
+    {
+        $user = auth()->user();
+
+        $storeData = Arr::only($request->input(), [
+            'thumbnail', 'name', 'description'
+        ]);
+
+        $robot = $this->robotService->store($user->id, $storeData);
+
+        // later: create response classes to generalise them and make more consistent/reusable (msg/code per response)
+        return (new RobotResource($robot))->additional([
+            'meta' => [
+                'message' => 'Robot created.'
+            ]
+        ]);
     }
 }

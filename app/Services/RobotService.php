@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\MongoDB\Robot\Robot;
 use App\Models\MongoDB\User\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
@@ -25,7 +26,7 @@ class RobotService
             $robots = $robots->where('name', 'LIKE', '%' . $queryFilter . '%');
         }
 
-        $robots = $robots->with('user')->get();
+        $robots = $robots->with('user')->orderBy('updated_at', 'desc')->get();
 
         return $robots;
     }
@@ -40,4 +41,15 @@ class RobotService
         return $queryBuilder;
     }
     */
+
+    public function store(string $userId, array $storeData)
+    {
+        $user = $this->users->find($userId);
+
+        $storeData = Arr::add($storeData, 'access_level', Robot::ACCESS_LEVEL_PRIVATE);
+
+        $robot = $user->robots()->create($storeData);
+
+        return $robot;
+    }
 }
