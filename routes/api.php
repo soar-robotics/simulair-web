@@ -15,12 +15,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['namespace' => 'Api', 'middleware' => ['api']], function () {
-    Route::group(['middleware' => ['verified']], function() {
+    Route::group(['middleware' => ['verified']], function () {
         Route::group(['prefix' => 'environments'], function () {
             Route::get('/', 'EnvironmentController@index');
         });
         Route::group(['prefix' => 'robots'], function () {
             Route::get('/', 'RobotController@index');
+            Route::post('/', 'RobotController@store');
         });
         Route::group(['prefix' => 'simulations'], function () {
             Route::get('/', 'SimulationController@index');
@@ -44,12 +45,12 @@ Route::group(['namespace' => 'Api', 'middleware' => ['api']], function () {
         Route::post('token/invalidate', 'AuthController@invalidate');
         Route::post('token/refresh', 'AuthController@refresh');
         Route::post('register', 'AuthController@register');
-        Route::group(['prefix' => 'verification'], function() {
+        Route::group(['prefix' => 'verification'], function () {
             /*
              * TODO Add callback url from frontend to register endpoint to be able to redirect successfully.
              */
-           Route::get('email/verify/{id}', 'AuthController@verify')->name('verification.verify');
-           Route::post('email/resend', 'AuthController@resend');
+            Route::get('email/verify/{id}', 'AuthController@verify')->name('verification.verify');
+            Route::post('email/resend', 'AuthController@resend');
         });
 
         Route::get('oauth/google', 'AuthController@redirectToProvider');
