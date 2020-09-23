@@ -12,6 +12,9 @@ class Robot extends Model
     protected $collection = 'robots';
     protected $dates = [];
     public $timestamps = true;
+    protected $fillable = [
+        'user_id', 'name', 'thumbnail', 'description', 'access_level'
+    ];
 
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';

@@ -536,6 +536,60 @@
 			"response": []
 		},
 		{
+			"name": "Robot - Store",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6ODAwMFwvYXBpXC9hdXRoXC90b2tlbiIsImlhdCI6MTYwMDg3MzExOSwiZXhwIjoxNjAwODc2NzE5LCJuYmYiOjE2MDA4NzMxMTksImp0aSI6InkyMVVHdUlyckJKQXZJVXkiLCJzdWIiOiI1ZjYyNGQyMmY5NTE5MjRjOWQ0Mzk5NTIiLCJwcnYiOiI5NDdkMDE2OGI5NDIzM2YzNjE3NDNhMTQ4OWRiNzM0MGQxNGFkYjYyIn0.-c6YmjN1juDY__18nwd3yLSa4T-bq2bfO9adiQTsDVw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "Robot test",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Robot description",
+							"type": "text"
+						},
+						{
+							"key": "thumbnail",
+							"value": "https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd0e069ea-3a97-417f-b87d-4fcff0321db5%2Fkiwi_tumbnail.jpeg?table=block&id=70904868-ad9d-4a70-8e2f-45a148b75fef&width=3200&userId=7e257b4b-cb12-4d44-9663-2bf8483bdb37&cache=v2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api_root}}/robots",
+					"host": [
+						"{{api_root}}"
+					],
+					"path": [
+						"robots"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Simulations - Listing",
 			"request": {
 				"auth": {
@@ -863,7 +917,7 @@
 	],
 	"variable": [
 		{
-			"id": "8c7bd65c-176f-4621-b048-6ff0f88c85df",
+			"id": "feabaae2-ddff-45bc-97e2-5b93408eda9d",
 			"key": "api_root",
 			"value": "http://simulair.projects.lubarto.com/api"
 		}
