@@ -1,3 +1,5 @@
+# WARNING: !! DEPRECATED !!
+This project is deprecated and the platform implements aws services as a serverless back-end.
 
 # Simulair-web - Web Service
 Backend solution for Simulair-web project.
